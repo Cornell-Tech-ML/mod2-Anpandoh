@@ -11,7 +11,20 @@ def RParam(*shape):
     r = 2 * (minitorch.rand(shape) - 0.5)
     return minitorch.Parameter(r)
 
-# TODO: Implement for Task 2.5.
+class Linear(minitorch.Module):
+    def __init__(self, inSize, outSize):
+        super().__init__()
+        self.weights = RParam(inSize, outSize)
+        self.bias = RParam(outSize)
+        self.outSize = outSize
+
+    def forward(self, x):
+        batch, inSize = x.shape
+        x = x.view(batch, inSize, 1)
+        w = self.weights.value.view(1, inSize, self.outSize)
+        h = (w * x).sum(1).view(batch, self.outSize)
+        return h + self.bias.value.view(self.outSize)
+        
 
 def default_log_fn(epoch, total_loss, correct, losses):
     print("Epoch ", epoch, " loss ", total_loss, "correct", correct)

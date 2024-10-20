@@ -364,11 +364,8 @@ class Tensor:
         # dim_tensor = Tensor.make(dim, (len(dim),), backend=self.backend)
         return Permute.apply(self, tensor(list(dim)))
 
-    def view(self, dim: Optional[int] = None) -> Tensor:
-        if dim is None:
-            return self
-        dim_tensor = Tensor.make([dim], (1,), backend=self.backend)
-        return View.apply(self, dim_tensor)
+    def view(self, *dim: Optional[int]) -> Tensor:
+        return View.apply(self, tensor(list(dim)))
 
     def zero_grad_(self) -> None:
         self.grad = None

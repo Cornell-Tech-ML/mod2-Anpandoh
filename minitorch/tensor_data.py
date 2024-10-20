@@ -48,8 +48,7 @@ def index_to_position(index: Index, strides: Strides) -> int:
     for i in range(len(index)):
         position += index[i] * strides[i]
     return position
-    # TODO: Implement for Task 2.1.
-    # raise NotImplementedError("Need to implement for Task 2.1")
+
 
 
 def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
@@ -67,7 +66,6 @@ def to_index(ordinal: int, shape: Shape, out_index: OutIndex) -> None:
     for i in range(len(shape) - 1, -1, -1):
         out_index[i] = ordinal % shape[i]
         ordinal //= shape[i]
-     # TODO: Implement for Task 2.1.
 
 
 

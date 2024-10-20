@@ -11,6 +11,18 @@ def RParam(*shape):
     r = 2 * (minitorch.rand(shape) - 0.5)
     return minitorch.Parameter(r)
 
+class Network(minitorch.Module):
+    def __init__(self, hidden_layers):
+        super().__init__()
+        self.layer1 = Linear(2, hidden_layers)
+        self.layer2 = Linear(hidden_layers, hidden_layers)
+        self.layer3 = Linear(hidden_layers, 1)
+
+    def forward(self, input_tensor):
+        hidden_output1 = self.layer1.forward(input_tensor).relu()
+        hidden_output2 = self.layer2.forward(hidden_output1).relu()
+        return self.layer3.forward(hidden_output2).sigmoid()
+
 class Linear(minitorch.Module):
     def __init__(self, inSize, outSize):
         super().__init__()
